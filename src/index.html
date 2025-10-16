@@ -6,5 +6,193 @@
     <link rel="stylesheet" href="./output.css" />
   </head>
   <body>
+    <!-- Main Container -->
+    <div
+      class="h-screen relative bg-gradient-to-b from-sky-200 to-violet-300 dark:from-sky-900 dark:to-violet-900 flex justify-center items-center"
+    >
+      <!-- Logo -->
+      <div class="flex items-center justify-center absolute top-10 select-none">
+        <h1 class="text-4xl dark:text-white">Quizzy</h1>
+        <img
+          src="./img/brain-black.png"
+          alt="black brain"
+          class="black-brain w-8 ml-0.5 mt-2 dark:hidden"
+        />
+        <img
+          src="img/brain-white.png"
+          alt="white brain"
+          class="white-brain w-8 ml-0.5 mt-2 hidden dark:block"
+        />
+      </div>
+      <section
+        class="main-section bg-indigo-300 dark:bg-indigo-900 start-quiz-state flex flex-col items-center justify-between rounded-xl text-center shadow-custom max-h-[70%] max-w-[70%] md:max-w-[55%] lg:max-w-[25%]"
+      >
+        <!-- Start Quiz Container -->
+        <div
+          class="start-quiz flex flex-col items-center justify-center dark:text-white"
+        >
+          <!-- Start Quiz Elements -->
+          <p class="knowledge-text text-sm md:text-lg leading-5 select-none">
+            Are you ready to test <br />
+            your <span class="font-bold">knowledge</span>?
+          </p>
+          <button
+            class="start bg-orange-300 dark:bg-green-700 dark:text-white mt-8 md:mt-12 px-5 rounded-xl custom-button hover:bg-orange-400 dark:hover:bg-green-800"
+          >
+            Start Quiz 🚀
+          </button>
+        </div>
+        <!-- Quiz Container -->
+        <div
+          class="quiz-con w-full hidden grid-cols-2 grid-rows-10 gap-3 text-center min-h-[400px] md:min-h-[500px] select-none"
+        >
+          <!-- Question -->
+          <div
+            class="question row-span-3 quiz-box justify-center font-semibold leading-4.5 md:px-1"
+          ></div>
+          <!-- Show Score Button -->
+          <button
+            class="show-score justify-self-center bg-orange-300 dark:bg-green-700 dark:text-white px-5 rounded-xl custom-button hover:bg-orange-400 dark:hover:bg-green-800 col-span-2 hidden starting-row-4"
+          >
+            Show Score
+          </button>
+
+          <!-- Answers -->
+          <form class="grid gap-2 w-full col-span-2 row-span-4 row-start-5">
+            <div class="contents col-span-2">
+              <input
+                type="radio"
+                name="answer"
+                id="answer1"
+                value="0"
+                class="hidden peer"
+              />
+              <label
+                for="answer1"
+                class="quiz-box answer-hover-effect border-[2px] border-transparent"
+              >
+                <span class="answer1 ml-4"></span>
+              </label>
+            </div>
+            <div class="contents col-span-2">
+              <input
+                type="radio"
+                name="answer"
+                id="answer2"
+                value="1"
+                class="hidden peer"
+              />
+              <label
+                for="answer2"
+                class="quiz-box answer-hover-effect border-[2px] border-transparent"
+              >
+                <span class="answer2 ml-4"></span>
+              </label>
+            </div>
+            <div class="contents col-span-2">
+              <input
+                type="radio"
+                name="answer"
+                id="answer3"
+                value="2"
+                class="hidden peer"
+              />
+              <label
+                for="answer3"
+                class="quiz-box answer-hover-effect border-[2px] border-transparent"
+              >
+                <span class="answer3 ml-4"></span>
+              </label>
+            </div>
+            <div class="contents col-span-2">
+              <input
+                type="radio"
+                name="answer"
+                id="answer4"
+                value="3"
+                class="hidden peer"
+              />
+              <label
+                for="answer4"
+                class="quiz-box answer-hover-effect border-[2px] border-transparent"
+              >
+                <span class="answer4 ml-4"></span>
+              </label>
+            </div>
+          </form>
+          <!-- Next Question Button -->
+          <button
+            class="next-question mt-1 justify-self-center col-span-2 hover:cursor-pointer hover:scale-105 active:scale-90 duration-300 w-6 h-6 md:w-8 md:h-8 row-start-9 hidden"
+          >
+            <img
+              src="img/arrow-black.png"
+              class="dark:hidden"
+              alt="arrow to right"
+            />
+            <img
+              src="img/arrow-white.png"
+              class="hidden dark:block"
+              alt="arrow to right"
+            />
+          </button>
+          <!-- Lock Answer Button-->
+          <button
+            class="lock-answer bg-cyan-600 dark:bg-cyan-700 hover:bg-cyan-700 dark:hover:bg-cyan-800 px-12 sm:px-0 sm:w-[75%] lg:px-16 custom-button justify-self-center row-start-10 h-8 md:h-9 text-white"
+          >
+            Lock
+          </button>
+          <!-- Leave Quiz Button-->
+          <button
+            class="leave-quiz bg-red-600 dark:bg-red-800 hover:bg-red-700 dark:hover:bg-red-900 px-12 sm:px-0 sm:w-[75%] lg:px-16 text-white custom-button justify-self-center row-start-10 h-8 md:h-9"
+          >
+            Leave
+          </button>
+        </div>
+        <!-- Result Container -->
+        <div
+          class="result-con hidden w-full py-12 justify-center flex-col gap-2 items-center relative"
+        >
+          <!-- Score -->
+          <p class="text-lg md:text-xl dark:text-white">
+            Your Score: <span class="score font-bold"></span> ✅
+          </p>
+          <!-- High Score -->
+          <p class="text-lg md:text-xl dark:text-white">
+            Highscore: <span class="high-score font-bold"></span> 👑
+          </p>
+          <!-- Leave Button-->
+          <button
+            class="exit absolute -top-5 -right-5 w-5 h-5 hover:cursor-pointer hover:opacity-60 active:opacity-50"
+          >
+            <img
+              src="img/close-black.png"
+              alt="close icon"
+              class="dark:hidden"
+            />
+            <img
+              src="img/close-white.png"
+              alt="close icon"
+              class="hidden dark:block"
+            />
+          </button>
+        </div>
+      </section>
+      <!-- Dark Mode Button -->
+      <button
+        class="darkmode-btn bg-indigo-200 dark:bg-indigo-700 rounded-full w-10 h-10 md:w-12 md:h-12 absolute bottom-4 right-4 hover:cursor-pointer hover:scale-105 active:scale-90 duration-300"
+      >
+        <img
+          src="img/darkmode.png"
+          alt="half moon"
+          class="moon-pic p-2 md:p-2.5 dark:hidden"
+        />
+        <img
+          src="img/lightmode.png"
+          alt="sun"
+          class="sun-pic p-1.5 md:p-2 hidden dark:block"
+        />
+      </button>
+    </div>
+    <script src="script.js"></script>
   </body>
 </html>

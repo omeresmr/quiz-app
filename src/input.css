@@ -1,1 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --font-onest: "Onest", sans-serif;
+  --shadow-custom: 0px 0px 4px 0px rgb(0, 0, 0, 0.5);
+}
+
+@layer base {
+  * {
+    font-family: var(--font-onest);
+  }
+}
+
+.quiz-state {
+  @apply p-5 w-full m-8;
+}
+
+.start-quiz-state {
+  @apply py-18 px-13;
+}
+
+.result-state {
+  @apply p-8;
+}
+
+.quiz-box {
+  @apply col-span-2 bg-indigo-200 dark:bg-indigo-700 dark:text-white text-sm md:text-base rounded-xl shadow-md flex items-center;
+}
+
+.answer-hover-effect {
+  @apply hover:border-indigo-800 peer-checked:border-indigo-800 dark:hover:border-indigo-200 dark:peer-checked:border-indigo-200;
+}
+
+.custom-button {
+  @apply text-xs sm:text-sm md:text-base py-1.25 shadow-xl rounded-2xl font-semibold hover:cursor-pointer disabled:opacity-60 disabled:pointer-events-none md:font-normal active:scale-95 duration-300;
+}
+
+@variant dark (&:where(.dark, .dark *));
