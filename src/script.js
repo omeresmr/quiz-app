@@ -103,6 +103,11 @@ const updateQuestion = function (currentQuestionIndex) {
   answer3El.textContent = questions[currentQuestionIndex].answers[2];
   answer4El.textContent = questions[currentQuestionIndex].answers[3];
 };
+const resetQuestionUI = function () {
+  resetAnswerBorders(answerInputs);
+  lockAnswerBtn.disabled = false;
+  nextQuestionBtn.classList.add("hidden");
+};
 
 const showScore = function () {
   scoreEl.textContent = `${score}/${questions.length}`;
@@ -148,13 +153,7 @@ const resetAnswerBorders = function (answerInputs) {
   }
 };
 
-resetQuestionUI = function () {
-  resetAnswerBorders(answerInputs);
-  lockAnswerBtn.disabled = false;
-  nextQuestionBtn.classList.add("hidden");
-};
-
-prepareNextQuestion = function () {};
+const prepareNextQuestion = function () {};
 
 const lockAnswer = function () {
   const selectedAnswer = document.querySelector("input[name=answer]:checked");
