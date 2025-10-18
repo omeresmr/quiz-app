@@ -118,10 +118,8 @@ const startQuiz = function () {
 const leaveQuiz = function () {
   currentQuestionIndex = 0;
   score = 0;
+  resetQuestionUI();
   setUIState("start");
-  resetAnswerBorders(answerInputs); // TODO gemeinsame funktion erstellen
-  lockAnswerBtn.disabled = false;
-  nextQuestionBtn.classList.add("hidden");
 };
 
 const highlightWrongAnswer = function (selectedAnswer) {
@@ -148,6 +146,12 @@ const resetAnswerBorders = function (answerInputs) {
 
     answer.checked = false;
   }
+};
+
+resetQuestionUI = function () {
+  resetAnswerBorders(answerInputs);
+  lockAnswerBtn.disabled = false;
+  nextQuestionBtn.classList.add("hidden");
 };
 
 prepareNextQuestion = function () {};
@@ -189,9 +193,7 @@ nextQuestionBtn.addEventListener("click", function () {
   currentQuestionIndex++;
   if (currentQuestionIndex < questions.length) {
     updateQuestion(currentQuestionIndex);
-    resetAnswerBorders(answerInputs); // TODO gemeinsame funktion erstellen
-    lockAnswerBtn.disabled = false;
-    nextQuestionBtn.classList.add("hidden");
+    resetQuestionUI();
   }
 });
 
@@ -200,8 +202,6 @@ toggleDarkModeBtn.addEventListener("click", function () {
   document.documentElement.classList.contains("dark")
     ? localStorage.setItem("darkMode", "true")
     : localStorage.setItem("darkMode", "false");
-
-  console.log(localStorage.getItem("darkMode"));
 });
 
 showScoreBtn.addEventListener("click", function () {
@@ -218,5 +218,5 @@ document.addEventListener("DOMContentLoaded", (event) => {
   if (localStorage.getItem("darkMode") === "true")
     document.documentElement.classList.add("dark");
 
-  highScore = Number(localStorage.getItem("highScore")) || highScore;
+  highScore = Number(localStorage.getItem("highScore")) || 0;
 });
