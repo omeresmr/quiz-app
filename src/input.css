@@ -36,4 +36,12 @@
   @apply text-xs sm:text-sm md:text-base py-1.25 shadow-xl rounded-2xl font-semibold hover:cursor-pointer disabled:opacity-60 disabled:pointer-events-none md:font-normal active:scale-95 duration-300;
 }
 
+.next-question {
+  @apply mt-1 justify-self-center col-span-2 hover:cursor-pointer hover:scale-105 active:scale-90 duration-300 w-6 h-6 md:w-8 md:h-8 row-start-9;
+}
+
+.remaining-seconds {
+  @apply dark:text-white text-sm md:text-base;
+}
+
 @variant dark (&:where(.dark, .dark *));

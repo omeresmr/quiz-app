@@ -25,13 +25,19 @@ const answer3El = document.querySelector(".answer3");
 const answer4El = document.querySelector(".answer4");
 const scoreEl = document.querySelector(".score");
 const highScoreEl = document.querySelector(".high-score");
+const remainingTimeEl = document.querySelector(".remaining-seconds");
 
 // Variables
+
+// Constants
+const TIME_PER_QUESTION = 15000; // 15 Seconds per Question
 
 const answerInputs = document.querySelectorAll("input[name=answer]");
 let currentQuestionIndex = 0;
 let score = 0;
 let highScore = 0;
+let timer;
+let timerLength = TIME_PER_QUESTION;
 
 const questions = [
   // 1. Question
@@ -66,6 +72,12 @@ const questions = [
 
 // Functions
 
+const showNextButton = function () {
+  if (currentQuestionIndex < questions.length - 1)
+    nextQuestionBtn.classList.remove("hidden");
+  else showScoreBtn.classList.remove("hidden");
+};
+
 const setUIState = function (state) {
   // Hide and reset everything
   startQuizCon.classList.add("hidden");
@@ -95,6 +107,46 @@ const setUIState = function (state) {
   }
 };
 
+const startTimer = function () {
+  // Show remaining Time
+  remainingTimeEl.classList.remove("hidden");
+  timer = setInterval(() => {
+    timerLength -= 1000;
+    remainingTimeEl.textContent = formatTime(timerLength);
+
+    if (timerLength <= 0) {
+      remainingTimeEl.textContent = "Time is over!";
+
+      // Prevent any other interaction
+      removeHoverEffect();
+      lockAnswerBtn.disabled = true;
+
+      setTimeout(() => {
+        remainingTimeEl.classList.add("hidden");
+        showNextButton();
+
+        stopTimer();
+      }, 2000);
+    }
+  }, 1000);
+};
+
+const stopTimer = function () {
+  // stop timer
+  clearInterval(timer);
+
+  // Reset seconds
+  timerLength = TIME_PER_QUESTION;
+
+  // Update remaining Time UI
+  remainingTimeEl.textContent = formatTime(timerLength);
+
+  // Hide remaining Time
+  remainingTimeEl.classList.add("hidden");
+};
+
+const formatTime = (milliseconds) => `${Math.floor(milliseconds / 1000)}`;
+
 const updateQuestion = function (currentQuestionIndex) {
   // Update the elements after every question
   questionEl.textContent = `${currentQuestionIndex + 1}. ${questions[currentQuestionIndex].question}`;
@@ -109,6 +161,12 @@ const resetQuestionUI = function () {
   nextQuestionBtn.classList.add("hidden");
 };
 
+const removeHoverEffect = () => {
+  for (let i = 0; i < answerInputs.length; i++) {
+    answerInputs[i].labels[0].classList.remove("answer-hover-effect");
+  }
+};
+
 const showScore = function () {
   scoreEl.textContent = `${score}/${questions.length}`;
   highScoreEl.textContent = highScore;
@@ -118,6 +176,8 @@ const showScore = function () {
 const startQuiz = function () {
   setUIState("quiz");
   updateQuestion(currentQuestionIndex);
+  startTimer();
+  // Nach 15 Sekunden "Time over text anzeigen"
 };
 
 const leaveQuiz = function () {
@@ -125,6 +185,7 @@ const leaveQuiz = function () {
   score = 0;
   resetQuestionUI();
   setUIState("start");
+  stopTimer();
 };
 
 const highlightWrongAnswer = function (selectedAnswer) {
@@ -153,30 +214,22 @@ const resetAnswerBorders = function (answerInputs) {
   }
 };
 
-const prepareNextQuestion = function () {};
-
 const lockAnswer = function () {
   const selectedAnswer = document.querySelector("input[name=answer]:checked");
   const correctAnswer = document.querySelector(
     `input[value="${String(questions[currentQuestionIndex].correctAnswer)}"]`
   );
   if (selectedAnswer) {
-    // Removes the hover effect for all answers
-    for (let i = 0; i < answerInputs.length; i++) {
-      answerInputs[i].labels[0].classList.remove("answer-hover-effect");
-    }
+    removeHoverEffect();
     highlightCorrectAnswer(correctAnswer);
 
     if (selectedAnswer !== correctAnswer) highlightWrongAnswer(selectedAnswer);
     else score++;
 
-    // Only show the next question button if there is another question
-    if (currentQuestionIndex < questions.length - 1)
-      nextQuestionBtn.classList.remove("hidden");
-    else showScoreBtn.classList.remove("hidden");
-
+    showNextButton();
     lockAnswerBtn.disabled = true;
   }
+  stopTimer();
 };
 
 // Events
@@ -193,6 +246,7 @@ nextQuestionBtn.addEventListener("click", function () {
   if (currentQuestionIndex < questions.length) {
     updateQuestion(currentQuestionIndex);
     resetQuestionUI();
+    startTimer();
   }
 });
 
